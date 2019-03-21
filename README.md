@@ -1,10 +1,5 @@
 # Backpedal
-
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/backpedal`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
-
-Give your users the ability to backpedal across any number of routes in your app.
+This gem provides developers a simple way to capture a users navigational path across multiple routes in their app.  So for example, if a user is looking at a specific order(orders_controller), and they click on a product description(products_controller), the back link on this page would take them back to the order they were looking at.  If the user arrived at the product view from the index action on the products controller the same back link would take them back to the index view they were on previously.
 
 ## Installation
 
