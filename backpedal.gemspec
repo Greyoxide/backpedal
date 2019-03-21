@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ["greyoxide"]
   spec.email         = ["greyoxide@gmail.com"]
 
-  spec.summary       = %q{A gem that gives your users a universal back link across multiple routes.}
+  spec.summary       = %q{A Rails gem that gives your users a universal back link across multiple routes.}
   spec.homepage      = "https://github.com/Greyoxide/backpedal"
   spec.license       = "MIT"
 
