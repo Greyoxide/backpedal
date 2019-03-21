@@ -27,11 +27,12 @@ Or install it yourself as:
 Usage is simple:
 
 ```ruby
-# app/application_controller.rb
 class ApplicationController < ActionController::Base
-before_action :grow_tree, if: :current_user
+  before_action :capture_path, if: :current_user
 end
 ```
+
+This will append the referring path to the navigation stack used by Backpedal to create a back link.
 
 ```erb
 <%# app/users/show.html.erb %>
@@ -40,16 +41,40 @@ end
 <p> Here is where your users would appear be if you had some </p>
 ```
 
+Have a specific path in mind?  Try this:
 
-## Development
+```erb
+<%# app/users/show.html.erb %>
+<%= back_link(users_path) %>
+<h1>Users#show</h1>
+<p> Here is where your users would appear be if you had some </p>
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+What if you want a specific controller action to wipe out the navigation stack and restart at the current action?  Then set a before_action filter to dissolve the navigation stack.
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+```ruby
+class SomeController < ActionController::base
+  before_action :dissolve, only: [:index]
+end
+```
+This will dissolve the navigation stack and set the current controller action as the base or starting point
+
+
+
+Ok so wait, what if I have some controller actions I don't want appended to backpedal stack?  Check this out:
+
+```ruby
+#config/initializers/backpedal.rb
+Backpedal.configure do |config|
+  config.skipped_verbs = ['new', 'edit', 'destroy', 'suspend', 'resend_invitation', 'etc']
+end
+```
+
+If you add the initializer, it will overwrite the default skipped http verbs(new, edit, destroy).  So make sure you include those if you want to skip those controller actions.
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/backpedal.
+Bug reports and pull requests are welcome on GitHub at https://github.com/greyoxide/backpedal.
 
 ## License
 
