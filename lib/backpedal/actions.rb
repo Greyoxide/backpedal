@@ -1,5 +1,11 @@
 module Actions
 
+  if Backpedal.configuration.blank?
+    @@skipped_verbs = ['new', 'edit', 'delete', 'destroy']
+  else
+    @@skipped_verbs = Backpedal.configuration.skipped_verbs
+  end
+
   extend ActiveSupport::Concern
 
   def capture_path
@@ -13,7 +19,7 @@ module Actions
       # remove this page from the stack if the user was just here(clicked back link)
       tree.pop
       session[:tree] = tree.join(",")
-    elsif request.referer.present? and request.referer != tree.last and Backpedal.configuration.skipped_verbs.exclude? request.referer.split("/").last.split("?")[0]
+    elsif request.referer.present? and request.referer != tree.last and @@skipped_verbs.exclude? request.referer.split("/").last.split("?")[0]
       tree << previous_page
       session[:tree] = tree.join(",")
     end
