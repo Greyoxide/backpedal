@@ -45,6 +45,24 @@ Have a specific path in mind?  Try this:
 <p> Here is where your users would appear be if you had some </p>
 ```
 
+Wish to backpedal from the controller?  Use the `stepback` method in your controller
+
+```ruby
+Class PagesController
+  def create
+    @page = Page.new(pages_params)
+    if @page.save
+      flash[:success] = "Yahoo! now to step back one level"
+      stepback
+    else
+      "something else"
+    end
+  end
+end
+```
+
+Using `stepback` on a multi-step form or wizard, and want to redirect back to before it all began?  Tell stepback how many pages you want to stepback with an optional argument: `stepback(3)`
+
 What if you want a specific controller action to wipe out the navigation stack and restart at the current action?  Then set a before_action filter to dissolve the navigation stack.
 
 ```ruby
@@ -67,6 +85,16 @@ end
 
 If you add the initializer, it will overwrite the default skipped http verbs(new, edit, destroy).  So make sure you include those if you want to skip those controller actions.
 
+## Debugging
+
+Are you finding it difficult to keep track of the navigation stack? Use the `stack` helper to print the navigation into any view.
+
+```erb
+  <%# app/layouts/application.html.erb %>
+  <body>
+    <%= stack %> 
+    <%= yield %>
+```
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/greyoxide/backpedal.
