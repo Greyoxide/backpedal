@@ -26,6 +26,7 @@ module Actions
   end
 
   def dissolve
+		# Erase the navigation stack and restart it at the current controller action.
     session[:tree] = request.original_url
   end
 
@@ -36,4 +37,15 @@ module Actions
     tree.delete_if { |x| x = path }
     session[:tree] = tree.join(",")
   end
+
+	def stepback(steps = nil)
+		# Redirect to a specific point in the navigation stack from the controller
+		tree = session[:tree].split(",")
+		unless steps == nil
+			target = tree.reverse[steps - 1]
+		else
+			target = tree.last
+		end
+		redirect_to target
+	end
 end
