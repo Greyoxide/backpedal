@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    backpedal (0.2.1)
+    backpedal (0.2.2)
 
 GEM
   remote: https://rubygems.org/
@@ -17,4 +17,4 @@ DEPENDENCIES
   rake (~> 10.0)
 
 BUNDLED WITH
-   2.0.2
+   2.4.12
